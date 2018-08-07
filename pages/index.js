@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Card, Button, Grid, Image } from "semantic-ui-react";
+import { Card, Button, Grid } from "semantic-ui-react";
 import factory from "../ethereum/factory";
 import Layout from "../components/Layout";
 import { Link } from "../routes";
-import Charity from "../ethereum/charity";
-import FancyCard from "../components/FancyCard";
-import fancyCard from "../components/FancyCard";
 
 class CharityIndex extends Component {
   state = {
