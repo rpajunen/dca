@@ -58,8 +58,6 @@ class CharityIndex extends Component {
     const items = this.props.charities.map(address => {
       return {
         raised: true,
-        link: false,
-        extra: 'this is extra container',
         centered: false,
         header: address,
         meta: "Charity address",

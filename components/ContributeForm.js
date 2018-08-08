@@ -4,11 +4,6 @@ import Charity from '../ethereum/charity';
 import web3 from '../ethereum/web3';
 import { Router } from '../routes';
 
-/**
- * DonationForm:
- * Is a components that can be rendered to a page so users can send money to specific contract.
- */
-
 class DonationForm extends Component {
   state = {
     value: '',
@@ -30,7 +25,7 @@ class DonationForm extends Component {
         value: web3.utils.toWei(this.state.value, 'ether')
       });
 
-      Router.replaceRoute(`/charities/${this.props.address}`); // refresh the page to get the updated content to show up
+      Router.replaceRoute(`/charities/${this.props.address}`);
     } catch (err) {
       if(err.message.includes('while converting')) {
         this.setState({ errorMessage: 'Please enter valid number' })

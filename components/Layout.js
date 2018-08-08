@@ -2,6 +2,7 @@ import React from "react";
 import { Container } from "semantic-ui-react";
 import Head from "next/head";
 import Header from "./Header";
+
 /**
  * Layout.js component
  * -all of the page's content that calls layout, will be passed to Layout in props.chidren

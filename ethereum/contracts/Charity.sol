@@ -5,9 +5,9 @@ contract CharityFactory {
     address[] public deployedCharities;
 
     // deploys a new instance of a charity and stores the resulting address
-    function createCharity(uint minimum, string name) public {
+    function createCharity(uint minimum) public {
         require(minimum > 0);
-        address newCharity = new Charity(minimum, msg.sender, name);
+        address newCharity = new Charity(minimum, msg.sender);
         deployedCharities.push(newCharity);
     }
 
@@ -59,11 +59,10 @@ contract Charity {
     }
 
     // Campaign constructor with arguments: minimum contribution and creator
-    constructor (uint minimum, address creator, string _name) public {
+    constructor (uint minimum, address creator) public {
         manager = creator;
         minimumContribution = minimum;
         milestonesCompleted = 0;
-        name = _name;
     }
 
     /*
@@ -164,7 +163,7 @@ contract Charity {
     }
 
     function getSummary() public view returns (
-      uint, uint, uint, uint, uint, address, string
+      uint, uint, uint, uint, uint, address
       ) {
         return (
           minimumContribution,
@@ -172,8 +171,7 @@ contract Charity {
           milestones.length,
           donorsCount,
           milestonesCompleted,
-          manager,
-          name
+          manager
         );
     }
 

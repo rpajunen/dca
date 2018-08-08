@@ -15,8 +15,7 @@ class CharityNew extends Component {
   state = {
     minimumContribution: "",
     errorMessage: "",
-    loading: false,
-    name: ""
+    loading: false
   };
 
   /**
@@ -38,8 +37,6 @@ class CharityNew extends Component {
   onSubmit = async event => {
     event.preventDefault();
 
-    console.log(this.state.minimumContribution + ' ' + this.state.name);
-
     this.setState({ loading: true, errorMessage: "" });
 
     try {
@@ -54,7 +51,7 @@ class CharityNew extends Component {
 
     try {
       const accounts = await web3.eth.getAccounts();
-      await factory.methods.createCharity(this.state.minimumContribution, this.state.name).send({
+      await factory.methods.createCharity(this.state.minimumContribution).send({
         from: accounts[0]
       });
 
@@ -69,7 +66,7 @@ class CharityNew extends Component {
       }
     }
 
-    this.setState({ loading: false, minimumContribution: '', name: '' });
+    this.setState({ loading: false, minimumContribution: '' });
   };
 
   /**
@@ -95,15 +92,6 @@ class CharityNew extends Component {
               value={this.state.minimumContribution}
               onChange={event =>
                 this.setState({ minimumContribution: event.target.value })
-              }
-            />
-          </Form.Field>
-          <Form.Field>
-            <label>Name of the Charity</label>
-            <Input
-              value={this.state.name}
-              onChange={event =>
-                this.setState({ name: event.target.value })
               }
             />
           </Form.Field>
