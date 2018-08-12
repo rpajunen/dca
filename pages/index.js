@@ -101,7 +101,7 @@ class CharityIndex extends Component {
     return (
       <Layout>
         <div>
-          <h3>Open Charities</h3>
+          <h3>All Charities</h3>
           <Link route="/charities/new">
             <a>
               <Button
