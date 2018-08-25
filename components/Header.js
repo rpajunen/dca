@@ -17,7 +17,7 @@ export default () => {
   return (
     <Menu style={{ marginTop: "10px" }}>
       <Link route="/">
-        <a className="item">Distributed Charity Application</a>
+        <a className="item">Decentralized Charity Application</a>
       </Link>
 
       <Menu.Menu position="right" />
