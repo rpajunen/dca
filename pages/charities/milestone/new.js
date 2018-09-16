@@ -1,17 +1,17 @@
-import React, { Component } from 'react';
-import { Form, Button, Message, Input } from 'semantic-ui-react';
-import Charity from '../../../ethereum/charity';
-import web3 from '../../../ethereum/web3';
-import { Link, Router } from '../../../routes';
-import Layout from '../../../components/Layout';
+import React, { Component } from "react";
+import { Form, Button, Message, Input } from "semantic-ui-react";
+import Charity from "../../../ethereum/charity";
+import web3 from "../../../ethereum/web3";
+import { Link, Router } from "../../../routes";
+import Layout from "../../../components/Layout";
 
 class MilestoneNew extends Component {
   state = {
-    value: '',
-    description: '',
-    recipient: '',
+    value: "",
+    description: "",
+    recipient: "",
     loading: false,
-    errorMessage: ''
+    errorMessage: ""
   };
 
   static async getInitialProps(props) {
@@ -25,35 +25,47 @@ class MilestoneNew extends Component {
 
     const charity = Charity(this.props.address);
     const { description, value, recipient } = this.state;
-    
-    try {
-      if (description === '') throw 'description field is empty';
-      if (value === '') throw 'value field is empty';
-      if (isNaN(Number(value))) throw "value field is not a number";
-      if (value <= 0) throw 'value is less than equal to zero';
-      if (recipient === '') throw 'Recipient address is invalid';
 
+    try {
+      if (description === "") throw "description field is empty";
+      if (value === "") throw "value field is empty";
+      if (isNaN(Number(value))) throw "value field is not a number";
+      if (value <= 0) throw "value is less than equal to zero";
+      if (recipient === "") throw "Recipient address is invalid";
     } catch (error) {
-      this.setState({ loading: false, errorMessage: 'Invalid input (' + error + ')' })
+      this.setState({
+        loading: false,
+        errorMessage: "Invalid input (" + error + ")"
+      });
       return;
     }
 
-    this.setState({ loading: true, errorMessage: '' });
+    this.setState({ loading: true, errorMessage: "" });
 
     try {
       const accounts = await web3.eth.getAccounts();
       await charity.methods
-        .createMilestone(description, web3.utils.toWei(value, 'ether'), recipient)
+        .createMilestone(
+          description,
+          web3.utils.toWei(value, "ether"),
+          recipient
+        )
         .send({ from: accounts[0] });
 
       Router.pushRoute(`/charities/${this.props.address}/milestones`);
     } catch (error) {
-      if(error.message.includes('Returned error: Error: MetaMask Tx Signature: User denied')) {
-        this.setState({ errorMessage: 'Transaction rejected by user' })
-      } else if (error.message.includes('Provided address')){
-        this.setState({ errorMessage: 'Recipient address is invalid' })
+      if (
+        error.message.includes(
+          "Returned error: Error: MetaMask Tx Signature: User denied"
+        )
+      ) {
+        this.setState({ errorMessage: "Transaction rejected by user" });
+      } else if (error.message.includes("Provided address")) {
+        this.setState({ errorMessage: "Recipient address is invalid" });
       } else if (error.message.includes('No "from" address')) {
-        this.setState({ errorMessage: 'MetaMask log in is required to create milestones' })
+        this.setState({
+          errorMessage: "MetaMask log in is required to create milestones"
+        });
       } else {
         this.setState({ errorMessage: error.message }); // for production change errorMessage to: 'something went wrong!
       }
@@ -75,7 +87,8 @@ class MilestoneNew extends Component {
             <Input
               value={this.state.description}
               onChange={event =>
-                this.setState({ description: event.target.value })}
+                this.setState({ description: event.target.value })
+              }
             />
           </Form.Field>
 
@@ -92,7 +105,8 @@ class MilestoneNew extends Component {
             <Input
               value={this.state.recipient}
               onChange={event =>
-                this.setState({ recipient: event.target.value })}
+                this.setState({ recipient: event.target.value })
+              }
             />
           </Form.Field>
 

@@ -8,7 +8,7 @@ import MilestoneRow from "../../../components/MilestoneRow";
 class MilestoneIndex extends Component {
   state = {
     hideMessage: true
-  }
+  };
 
   static async getInitialProps(props) {
     const { address } = props.query;
@@ -27,9 +27,9 @@ class MilestoneIndex extends Component {
     return { address, milestones, milestoneCount, approversCount };
   }
 
-  myCallback = (dataFromChild) => {
-    this.setState({ hideMessage: dataFromChild })
-  }
+  myCallback = dataFromChild => {
+    this.setState({ hideMessage: dataFromChild });
+  };
 
   renderRows() {
     return this.props.milestones.map((milestone, index) => {
@@ -60,9 +60,7 @@ class MilestoneIndex extends Component {
           </a>
         </Link>
         <Link route={`/charities/${this.props.address}/`}>
-          <a>
-            Back to details
-          </a>
+          <a>Back to details</a>
         </Link>
         <Table>
           <Header>
@@ -79,12 +77,12 @@ class MilestoneIndex extends Component {
           <Body>{this.renderRows()}</Body>
         </Table>
 
-        <Message icon hidden={this.state.hideMessage} >
-          <Icon name='circle notched' loading />
-            <Message.Content>
-              <Message.Header>Just a moment</Message.Header>
-                We are processing your transaction.
-            </Message.Content>
+        <Message icon hidden={this.state.hideMessage}>
+          <Icon name="circle notched" loading />
+          <Message.Content>
+            <Message.Header>Just a moment</Message.Header>
+            We are processing your transaction.
+          </Message.Content>
         </Message>
 
         <div>Found {this.props.milestoneCount} milestones.</div>
